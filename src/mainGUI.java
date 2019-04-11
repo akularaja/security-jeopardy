@@ -1,26 +1,3 @@
-mainGUI.java
-D
-K
-P
-R
-Type
-Java
-Size
-30 KB (30,502 bytes)
-Storage used
-0 bytesOwned by utexas.edu
-Location
-FINAL CODE
-Creator
-Divya Chandrupatla
-Modified
-2:12 PM by Divya Chandrupatla
-Opened
-2:14 PM by me
-Created
-2:12 PM
-Add a description
-Viewers can download
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
