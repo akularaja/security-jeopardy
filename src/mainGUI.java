@@ -32,14 +32,13 @@ public class mainGUI {
 	//TODO: current player set to p1 in the constructor. create function to alternate as game is being played
 	
 	//Category Names
-	//TODO: CHANGE THESE TO MATCH NEW GAME AND MAKE SURE TO CORRECT IN QUESTION FILE
-	public static final String COne = "c1";
-	public static final String CTwo = "c2";
-	public static final String CThree = "c3";
-	public static final String CFour = "c4";
-	public static final String CFive = "c5";
+	public static final String COne = "Encryption Algorithms";
+	public static final String CTwo = "DoS Attacks";
+	public static final String CThree = "RSA Encryption";
+	public static final String CFour = "Malicious Software";
+	public static final String CFive = "User Authentication";
 	//Game Title
-	public static final String GAME_TITLE = "GAME TITLE";
+	public static final String GAME_TITLE = "Security Jeopardy";
 
 	// Question Strings
 	public static List<String> categoryOne = new ArrayList<String>();
