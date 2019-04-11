@@ -1,8 +1,7 @@
-
 public class player {
 
-		public static String name;
-		public static int points;
+		private String name;
+		private int points;
 		
 		public player(String playerName)
 		{
@@ -10,23 +9,24 @@ public class player {
 			points = 0;
 		}
 		
-		public static void resetPlayer()
+		public void resetPlayer()
 		{
 			points = 0;
 		}
 		
-		public static String getName()
+		public String getName()
 		{
 			return name;
 		}
 		
-		public static int getPoints()
+		public int getPoints()
 		{
 			return points;
 		}
 		
-		public static void addPoints(int numAdded)
+		public void addPoints(int numAdded)
 		{
-			points = points + numAdded;
+			points += numAdded;
 		}
+		
 }
