@@ -28,18 +28,17 @@ public class mainGUI {
 	//Create two players
 	public static player p1 = new player("Player 1");
 	public static player p2 = new player("Player 2");
-	public static player currPlayer; 
-	//TODO: current player set to p1 in the constructor. create function to alternate as game is being played
+	public static player currPlayer = p1;
+
 	
 	//Category Names
-	//TODO: CHANGE THESE TO MATCH NEW GAME AND MAKE SURE TO CORRECT IN QUESTION FILE
-	public static final String COne = "c1";
-	public static final String CTwo = "c2";
-	public static final String CThree = "c3";
-	public static final String CFour = "c4";
-	public static final String CFive = "c5";
+	public static final String COne = "Encryption Algorithms";
+	public static final String CTwo = "DoS Attacks";
+	public static final String CThree = "RSA Encryption";
+	public static final String CFour = "Malicious Software";
+	public static final String CFive = "User Authentication";
 	//Game Title
-	public static final String GAME_TITLE = "GAME TITLE";
+	public static final String GAME_TITLE = "Security Jeopardy";
 
 	// Question Strings
 	public static List<String> categoryOne = new ArrayList<String>();
@@ -55,14 +54,15 @@ public class mainGUI {
 	// q frame
 	public static String qTitle;
 	public static JTextField userAnswer = new JTextField();
+	public static JButton userAnswer2 = new JButton("Answer");
 	public static JButton showAnswer = new JButton("Show the answer");
 	public static JFrame qframe = new JFrame("question");
 
 	// points counter
 	public static int pointsBig = 0; // points for a specific question
 	public static JLabel pointsP1Label = new JLabel("p1 points: " + p1.getPoints() + "     ");
-	public static JLabel pointsP2Label = new JLabel("p2 points: " + p2.getPoints());
-
+	public static JLabel pointsP2Label = new JLabel("p2 points: " + p2.getPoints() + "     ");
+	public static JLabel currentPlayerLabel = new JLabel("  Current player: " + currPlayer.getName());
 	public static JButton answerButton = new JButton("Answer");
 	public static JButton returnButton = new JButton("return to main board");
 
@@ -91,7 +91,7 @@ public class mainGUI {
 	static Color paleBlue = new Color(176, 224, 230);
 
 	// insert question boxes for categoryOne
-	final static JLabel COneLabel = new JLabel(COne);
+	final static JLabel COneLabel = new JLabel("<HTML>Encryption<br>Algorithm</HTML>");
 	final static JButton COne100 = new JButton("100");
 	final static JButton COne200 = new JButton("200");
 	final static JButton COne300 = new JButton("300");
@@ -99,7 +99,7 @@ public class mainGUI {
 	final static JButton COne500 = new JButton("500");
 
 	// insert question boxes for categoryTwo
-	final JLabel CTwoLabel = new JLabel(CTwo);
+	final JLabel CTwoLabel = new JLabel("<HTML>DoS<br>Attacks</HTML>");
 	final static JButton CTwo100 = new JButton("100");
 	final static JButton CTwo200 = new JButton("200");
 	final static JButton CTwo300 = new JButton("300");
@@ -107,7 +107,7 @@ public class mainGUI {
 	final static JButton CTwo500 = new JButton("500");
 
 	// insert question boxes for categoryThree
-	final JLabel CThreeLabel = new JLabel(CThree);
+	final JLabel CThreeLabel = new JLabel("<HTML>RSA<br>Encryption</HTML>");
 	final static JButton CThree100 = new JButton("100");
 	final static JButton CThree200 = new JButton("200");
 	final static JButton CThree300 = new JButton("300");
@@ -115,7 +115,7 @@ public class mainGUI {
 	final static JButton CThree500 = new JButton("500");
 
 	// insert question boxes for categoryFour
-	final JLabel CFourLabel = new JLabel(CFour);
+	final JLabel CFourLabel = new JLabel("<HTML>Malicious<br>Software</HTML>");
 	final static JButton CFour100 = new JButton("100");
 	final static JButton CFour200 = new JButton("200");
 	final static JButton CFour300 = new JButton("300");
@@ -123,7 +123,7 @@ public class mainGUI {
 	final static JButton CFour500 = new JButton("500");
 
 	// insert question boxes for categoryFive
-	final JLabel CFiveLabel = new JLabel(CFive);
+	final JLabel CFiveLabel = new JLabel("<HTML>User<br>Authentication</HTML>");
 	final static JButton CFive100 = new JButton("100");
 	final static JButton CFive200 = new JButton("200");
 	final static JButton CFive300 = new JButton("300");
@@ -150,14 +150,11 @@ public class mainGUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setPreferredSize(new Dimension(625, 450));
 		frame.setLocation(555, 250);
-		
-		//set current player
-		currPlayer = p1;
 
-		//TODO: ADD In label which says what player is current
 		Box headerBox = Box.createHorizontalBox();
 		headerBox.add(pointsP1Label);
 		headerBox.add(pointsP2Label);
+		headerBox.add(currentPlayerLabel);
 		headerBox.add(spacer5);
 		headerBox.add(resetButton);
 
@@ -689,7 +686,7 @@ public class mainGUI {
 				if(p1.getPoints() > p2.getPoints())
 				{
 					JOptionPane.showMessageDialog(frame, "P1 Wins!");
-				}else if(p1.getPoints() < p2.getPoints())
+				}else if(p2.getPoints() > p1.getPoints())
 				{
 					JOptionPane.showMessageDialog(frame, "P2 Wins!");
 				} else {
@@ -713,7 +710,6 @@ public class mainGUI {
 
 		// when the answer button is clicked, the question frame is disposed and
 		// the answer frame is created
-		//TODO: MODIFY USER RESPONSE to flip to the current player to opponent if the answer is wrong
 		answerButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -722,6 +718,15 @@ public class mainGUI {
 				qframe.setAlwaysOnTop(true);
 			}
 
+		});
+		
+		userAnswer2.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				checkAnswer2();
+				qframe.setAlwaysOnTop(true);
+			}
 		});
 
 		// dispose of the answer frame and moves the user back to the main board
@@ -751,6 +756,8 @@ public class mainGUI {
 		qBox.add(userAnswer);
 		qBox.add(answerButton);
 		qBox.add(showAnswer);
+		qBox.add(userAnswer2);
+		userAnswer2.setVisible(false);
 		showAnswer.setVisible(false);
 		qframe.add(qBox);
 		qframe.pack();
@@ -849,49 +856,77 @@ public class mainGUI {
 	// Creates the question frame that occurs after a category button(ex:
 	// Presidents 100) is pressed
 	public void createQFrame() {
+		System.out.println("in q frame");
 		questionTitle.setText(qTitle);
 		questionLabel.setText("Question: " + question);
 		showAnswer.setVisible(false);
 		qframe.setVisible(true);
 	}
-
-	// checks the user answer with the answer from the text file
-	public void checkAnswer() { // System.out.println("Answer:" + answer);
-								// System.out.println("User Ans: " +
-								// userAnswer.getText());
-
+	
+	public void switchPlayer(){
+		if (currPlayer.getName().equals(p1.getName())) {
+			currPlayer = p2;
+		}
+		else {
+			currPlayer = p1;
+		}
+		currentPlayerLabel.setText("current player: " + currPlayer.getName());
+	}
+	
+	public void checkAnswer(){
 		if (userAnswer.getText() != null) {
-			if (!(userAnswer.getText().equals(answer))) {
-				// System.out.println("don't know the answer");
-				JOptionPane.showMessageDialog(frame, "Answer Incorrect");
-				qframe.setAlwaysOnTop(false);
-				showAnswer.setVisible(true);
-				answerButton.setVisible(false);
-				answerButton.repaint();
-				return;
-			} else {
-				JOptionPane.showMessageDialog(frame, "Answer Correct!");
-				//add points to the correct player
-				if(currPlayer.getName().equals(p1.getName())) {
-					//add points to p1
-					p1.addPoints(pointsBig);
-				} else {
-					//add points to p2
-					p2.addPoints(pointsBig);
-				}
+			if (userAnswer.getText().equals(answer)) {
+				JOptionPane.showMessageDialog(frame, currPlayer.getName() + " got answer correct!");
+				currPlayer.addPoints(pointsBig);
 				pointsP1Label.setText("p1 points: " + p1.getPoints() + "     ");
-				pointsP2Label.setText("p2 points: " + p2.getPoints());
-				// System.out.println("User Answer: " + userAnswer.getText());
-				userAnswer.setText(null);
+				pointsP2Label.setText("p2 points: " + p2.getPoints() + "     ");
+				switchPlayer();
 				answerButton.setVisible(true);
+				userAnswer.setText(null);
 				answerButton.repaint();
 				qframe.dispose();
 				return;
 			}
+			else {
+				qframe.dispose();
+				switchPlayer();
+				JOptionPane.showMessageDialog(frame, "Answer incorrect, " + currPlayer.getName() + "'s turn!");
+				userAnswer.setText(null);
+				answerButton.setVisible(false);
+				answerButton.repaint();
+				userAnswer2.setVisible(true);
+				createQFrame();
+			}
 		}
-		System.out.println("set to null");
 		return;
 	}
+	
+	public void checkAnswer2()
+	{
+		if (userAnswer.getText().equals(answer)) {
+			JOptionPane.showMessageDialog(frame, currPlayer.getName() + " got answer correct!");
+			currPlayer.addPoints(pointsBig);
+			pointsP1Label.setText("p1 points: " + p1.getPoints() + "     ");
+			pointsP2Label.setText("p2 points: " + p2.getPoints() + "     ");
+			switchPlayer();
+			userAnswer2.setVisible(false);
+			answerButton.setVisible(true);
+			userAnswer.setText(null);
+			answerButton.repaint();
+			qframe.dispose();
+			return;
+		}
+		else {
+			JOptionPane.showMessageDialog(frame, "nobody gets the points :(");
+			showAnswer.setVisible(true);
+			userAnswer2.setVisible(false);
+			answerButton.setVisible(false);
+			userAnswer.setText(null);
+			answerButton.repaint();
+			return;
+		}
+	}
+
 
 	// creates the answer frame that pops up after the question frame
 	public void createAFrame() {
@@ -1061,7 +1096,7 @@ public class mainGUI {
 		p1.resetPlayer();
 		p2.resetPlayer();
 		pointsP1Label.setText("p1 points: " + p1.getPoints() + "     ");
-		pointsP2Label.setText("p2 points: " + p2.getPoints());
+		pointsP2Label.setText("p2 points: " + p2.getPoints() + "     ");
 	}
 
 	// loads in a text file and inserts the data into the correct category
